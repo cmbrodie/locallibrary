@@ -1,0 +1,28 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+<h1>Title: <em>{{book.title}}</em></h1>
+<p><strong>Author: </strong><a href="{{ book.author.get_absolute_url }}">{{book.author}}</a></p>
+<!-- author detail link not yet defined -->
+<p><strong>Summary: </strong><br>{{book.summary}}</p>
+<p><strong>ISBN: </strong>{{book.isbn}}</p>
+<p><strong>Genre: </strong>{{book.display_genre}}</p>
+<p><strong>URL: </strong>{{book.get_absolute_url}}</p>
+
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Copies</h4>
+    {% for copy in book.bookinstance_set.all %}
+    <!-- automagically generated bookinstance_set method to reverse reference one-to-many field -->
+    <hr>
+    <p
+        class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+        {{ copy.get_status_display }}
+        <!-- get_<choices>_display automatically generated for each choices field in a model -->
+    </p>
+    {% if copy.status != 'a' %}
+    <p><strong>Due to be returned: </strong>{{ copy.due_back }}</p>
+    {% endif %}
+    <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
+    <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

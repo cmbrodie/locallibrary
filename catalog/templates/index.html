@@ -16,4 +16,14 @@
     <li><strong>Book titles containing 'lord':</strong> {{ bookword }}</li>
     <li><strong>Genres containing 'fantasy'</strong> {{ genreword }}</li>
 </ul>
+
+{% if booklist %}
+<h1>Books: </h1>
+<ol>
+    {% for b in booklist %}
+    <li>{{ b }}</li>
+    {% endfor %}
+</ol>
+
+{% endif %}
 {% endblock %}
